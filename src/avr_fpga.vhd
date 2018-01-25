@@ -1,7 +1,8 @@
 -------------------------------------------------------------------------------
 -- 
--- Copyright (C) 2009, 2010 Dr. Juergen Sauermann
--- 
+--  Original work Copyright (C) 2009, 2010 Dr. Juergen Sauermann
+--  Modified work Copyright 2018 Alex Karpov <keyfour13@gmail.com>
+--
 --  This code is free software: you can redistribute it and/or modify
 --  it under the terms of the GNU General Public License as published by
 --  the Free Software Foundation, either version 3 of the License, or
@@ -22,6 +23,7 @@
 -- Module Name:     avr_fpga - Behavioral 
 -- Create Date:     13:51:24 11/07/2009 
 -- Description:     top level of a CPU
+-- Modified:        Change for support Xilinx EXCD-1 development board
 --
 -------------------------------------------------------------------------------
 
@@ -30,8 +32,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
+-- EXCD-1 has only 50MHz oscillator
 entity avr_fpga is
-    port (  I_CLK_100   : in  std_logic;
+    port (  I_CLK_50   : in  std_logic;
             I_SWITCH    : in  std_logic_vector(9 downto 0);
             I_RX        : in  std_logic;
 
@@ -144,15 +147,11 @@ begin
                 Q_7_SEGMENT => S_7_SEGMENT);
     
     -- input clock scaler
-    --
-    clk_div : process(I_CLK_100)
+    -- clock is fdevided by 2 for 50MHz
+    clk_div : process(I_CLK_50)
     begin
-        if (rising_edge(I_CLK_100)) then
-            L_CLK_CNT <= L_CLK_CNT + "001";
-            if (L_CLK_CNT = "001") then
-                L_CLK_CNT <= "000";
-                L_CLK <= not L_CLK;
-            end if;
+        if (rising_edge(I_CLK_50)) then
+            L_CLK <= not L_CLK;
         end if;
     end process;
     
