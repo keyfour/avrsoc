@@ -1,0 +1,30 @@
+# Compiled Object files
+*.elf
+*.hex
+*.o
+*.obj
+*.lss*
+*.map
+
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
+
+# Apps binaries
+tools/make_mem
+tools/end_conv
+
+# Memory content
+src/prog_mem_content.vhd
+
