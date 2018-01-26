@@ -36,4 +36,4 @@ view:
 
 clean:
 	ghdl --clean --workdir=simu
-
+	rm -rf simu
