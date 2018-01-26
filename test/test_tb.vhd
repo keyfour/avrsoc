@@ -36,7 +36,7 @@ end testbench;
 architecture Behavioral of testbench is
 
 component avr_fpga
-    port (  I_CLK_100   : in  std_logic;
+    port (  I_CLK_50   : in  std_logic;
             I_SWITCH    : in  std_logic_vector(9 downto 0);
             I_RX        : in  std_logic;
 
@@ -45,7 +45,7 @@ component avr_fpga
             Q_TX        : out std_logic);
 end component;
 
-signal L_CLK_100            : std_logic;
+signal L_CLK_50            : std_logic;
 signal L_LEDS               : std_logic_vector(3 downto 0);
 signal L_7_SEGMENT          : std_logic_vector(6 downto 0);
 signal L_RX                 : std_logic;
@@ -57,7 +57,7 @@ signal	L_CLK_COUNT         : integer := 0;
 begin
 
     fpga: avr_fpga
-    port map(   I_CLK_100   => L_CLK_100,
+    port map(   I_CLK_50   => L_CLK_50,
                 I_SWITCH    => L_SWITCH,
                 I_RX        => L_RX,
 
@@ -68,17 +68,17 @@ begin
     process -- clock process for CLK_100,
     begin
         clock_loop : loop
-            L_CLK_100 <= transport '0';
-            wait for 5 ns;
+            L_CLK_50 <= transport '0';
+            wait for 10 ns;
 
-            L_CLK_100 <= transport '1';
-            wait for 5 ns;
+            L_CLK_50 <= transport '1';
+            wait for 10 ns;
         end loop clock_loop;
     end process;
 
-    process(L_CLK_100)
+    process(L_CLK_50)
     begin
-        if (rising_edge(L_CLK_100)) then
+        if (rising_edge(L_CLK_50)) then
             case L_CLK_COUNT is
                 when 0 => L_SWITCH <= "0011100000";   L_RX <= '0';
                 when 2 => L_SWITCH(9 downto 8) <= "11";
