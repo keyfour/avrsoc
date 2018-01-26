@@ -28,3 +28,5 @@ tools/end_conv
 # Memory content
 src/prog_mem_content.vhd
 
+# Simulation files
+/simu
